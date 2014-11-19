@@ -35,11 +35,8 @@ class ImageModification(object):
 
         self.update_look_up_table()
 
-
-
-        self.ren.AddActor(self.create_stream_line(110,-50,0,50))
-        self.ren.AddActor(self.create_stream_line(110,50,0,50))
-
+        self.ren.AddActor(self.create_stream_line(0,150,0,0.2))
+        self.ren.AddActor(self.create_stream_line(25,150,0,0.5))
 
 
 
@@ -83,33 +80,32 @@ class ImageModification(object):
         self.arrowColor.AddRGBPoint(220, 0.0, 0.0, 1.0)
 
 
-    def create_stream_line(self,y1,y2,y3,n,r=10):
+    def create_stream_line(self,x,y,z,opa):
 
         rake = vtk.vtkLineSource()
-        rake.SetPoint1(15, -5, 32)
-        rake.SetPoint2(15, 5, 32)
-        rake.SetResolution(21)
+        rake.SetPoint1(x, -y, z)
+        rake.SetPoint2(x, y, z)
+        rake.SetResolution(150)
+
         rakeMapper = vtk.vtkPolyDataMapper()
         rakeMapper.SetInputConnection(rake.GetOutputPort())
+
+
         rakeActor = vtk.vtkActor()
         rakeActor.SetMapper(rakeMapper)
 
-        
-
-        #self.ren.AddActor(rakeActor)
+        self.ren.AddActor(rakeActor)
 
         integ = vtk.vtkRungeKutta4()
         streamline = vtk.vtkStreamLine()
         streamline.SetInputConnection(self.vec_reader.GetOutputPort())
-        streamline.SetSourceConnection(seeds.GetOutputPort())
-        streamline.SetMaximumPropagationTime(100)
-        streamline.SetIntegrationStepLength(0.05)
-        streamline.SetStepLength(0.5)
-        streamline.SpeedScalarsOn()
-        streamline.SetNumberOfThreads(1)
-        streamline.SetIntegrationDirectionToIntegrateBothDirections()
+        streamline.SetSourceConnection(rake.GetOutputPort())
         streamline.SetIntegrator(integ)
-        streamline.SetSpeedScalars(220)
+        streamline.SetMaximumPropagationTime(220)
+        streamline.SetIntegrationStepLength(0.1)
+        streamline.SetIntegrationDirectionToIntegrateBothDirections()
+        streamline.SetStepLength(0.05)
+
 
 
         scalarSurface = vtk.vtkRuledSurfaceFilter()
@@ -117,16 +113,16 @@ class ImageModification(object):
         #scalarSurface.SetOffset(0)
         #scalarSurface.SetOnRatio(2)
         #scalarSurface.PassLinesOn()
-        #scalarSurface.SetRuledModeToPointWalk()
-        scalarSurface.SetDistanceFactor(30)
-
+        scalarSurface.SetRuledModeToPointWalk()
+        scalarSurface.SetDistanceFactor(100)
         mapper = vtk.vtkPolyDataMapper()
         mapper.SetInputConnection(scalarSurface.GetOutputPort())
-        #mapper.SetScalarRange(self.vec_reader.GetScalarRange())
+        mapper.SetScalarRange(self.vec_reader.GetOutput().GetScalarRange())
         mapper.SetLookupTable(self.arrowColor)
 
         actor = vtk.vtkActor()
         actor.SetMapper(mapper)
+        actor.GetProperty().SetOpacity(opa)
 
         return actor
 
