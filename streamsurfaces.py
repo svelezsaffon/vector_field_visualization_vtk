@@ -35,7 +35,7 @@ class ImageModification(object):
 
         self.update_look_up_table()
 
-        self.ren.AddActor(self.create_stream_line(0,150,0,0.2))
+        #self.ren.AddActor(self.create_stream_line(0,150,0,0.2))
         self.ren.AddActor(self.create_stream_line(25,150,0,0.5))
 
 
@@ -82,19 +82,14 @@ class ImageModification(object):
 
     def create_stream_line(self,x,y,z,opa):
 
+
         rake = vtk.vtkLineSource()
         rake.SetPoint1(x, -y, z)
         rake.SetPoint2(x, y, z)
         rake.SetResolution(150)
 
-        rakeMapper = vtk.vtkPolyDataMapper()
-        rakeMapper.SetInputConnection(rake.GetOutputPort())
 
 
-        rakeActor = vtk.vtkActor()
-        rakeActor.SetMapper(rakeMapper)
-
-        self.ren.AddActor(rakeActor)
 
         integ = vtk.vtkRungeKutta4()
         streamline = vtk.vtkStreamLine()
@@ -112,9 +107,10 @@ class ImageModification(object):
         scalarSurface.SetInputConnection(streamline.GetOutputPort())
         #scalarSurface.SetOffset(0)
         #scalarSurface.SetOnRatio(2)
+
         #scalarSurface.PassLinesOn()
         scalarSurface.SetRuledModeToPointWalk()
-        scalarSurface.SetDistanceFactor(100)
+        scalarSurface.SetDistanceFactor(30)
         mapper = vtk.vtkPolyDataMapper()
         mapper.SetInputConnection(scalarSurface.GetOutputPort())
         mapper.SetScalarRange(self.vec_reader.GetOutput().GetScalarRange())
