@@ -11,7 +11,7 @@ class ImageModification(object):
     def __init__(self,delta,wing,vorticity):
 
 
-        self.print_counter=0
+        self.print_counter=11
         self.ren = vtk.vtkRenderer()
 
         self.geo_reader = vtk.vtkUnstructuredGridReader()
@@ -39,12 +39,10 @@ class ImageModification(object):
 
         self.update_look_up_table()
 
-
-
         self.ren.AddActor(self.create_stream_line(110,-50,0,50))
         self.ren.AddActor(self.create_stream_line(110,50,0,50))
-        self.ren.AddActor(self.create_stream_line(0,50,0,50,20))
-        self.ren.AddActor(self.create_stream_line(0,-50,0,50,20))
+        self.ren.AddActor(self.create_stream_line(0,20,0,50))
+        self.ren.AddActor(self.create_stream_line(0,-20,0,50))
 
 
         self.load_isosurface()
@@ -83,11 +81,13 @@ class ImageModification(object):
 
     def update_look_up_table(self):
 
-        self.arrowColor.AddRGBPoint(0, 1.0, 0.0, 0.0)
+        self.arrowColor.AddRGBPoint(0, 0.0, 1.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(110, 0.0, 1.0, 0.0)
+        self.arrowColor.AddRGBPoint(110, 1.0, 0.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(220, 0.0, 0.0, 1.0)
+
+
+        #self.arrowColor.AddRGBPoint(220, 0.0, 0.0, 1.0)
 
     def load_isosurface(self):
 
@@ -102,6 +102,7 @@ class ImageModification(object):
             [0.419607843,0.239215686,0.784313725],
             [0.709803922,0.0,0.654901961],
             [1.0,1.0,1.0],
+            [1.0,0.01,0.01]
         ]
         opacity=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8]
 
@@ -123,7 +124,7 @@ class ImageModification(object):
 
             actor = vtk.vtkActor()
 
-            actor.GetProperty().SetColor(colors[5][0],colors[5][1],colors[5][2])
+            actor.GetProperty().SetColor(colors[2][0],colors[2][1],colors[2][2])
 
             actor.SetMapper(mapper)
 
@@ -151,7 +152,7 @@ class ImageModification(object):
         streamline.SpeedScalarsOn()
         streamline.SetNumberOfThreads(1)
         streamline.SetIntegrationDirectionToIntegrateBothDirections()
-        streamline.VorticityOn()
+
         streamline.SetIntegrator(integ)
         streamline.SetSpeedScalars(220);
 

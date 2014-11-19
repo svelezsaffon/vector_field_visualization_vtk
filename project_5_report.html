@@ -223,7 +223,7 @@
       The following images show each of the seeding points alone, this was we ca clearly visualize what each of the seeding points create
       <table border="1">
         <tr>
-            <td COLSPAN="2">(X,Y,Z)->(110,-50,0)</td>
+            <td COLSPAN="2">(X,Y,Z)->(110,-50,0) With this seeding I wanted to show the left vortex of the wing</td>
         </tr>
         <tr>
             <td><img src="task2/lines/0vectorscreen.jpg"  style="width:555px;height:350px"></td>
@@ -231,7 +231,7 @@
         </tr>
 
         <tr>
-            <td COLSPAN="2">(X,Y,Z)->(110,50,0)</td>
+            <td COLSPAN="2">(X,Y,Z)->(110,50,0) With this seeding I wanted to show the right vortex of the wing</td>
         </tr>
         <tr>
             <td><img src="task2/lines/2vectorscreen.jpg"  style="width:555px;height:350px"></td>
@@ -239,7 +239,7 @@
         </tr>
 
         <tr>
-            <td COLSPAN="2">(X,Y,Z)->(0,20,0)</td>
+            <td COLSPAN="2">(X,Y,Z)->(0,20,0) With this seeding I wanted to show that the air in the center will remain most of the time "steady"</td>
         </tr>
         <tr>
             <td><img src="task2/lines/4vectorscreen.jpg"  style="width:555px;height:350px"></td>
@@ -247,7 +247,7 @@
         </tr>
 
         <tr>
-            <td COLSPAN="2">(X,Y,Z)->(0,-20,0)</td>
+            <td COLSPAN="2">(X,Y,Z)->(0,-20,0) With this seeding I wanted to show that the air in the center will remain most of the time "steady"</td>
         </tr>
         <tr>
             <td><img src="task2/lines/6vectorscreen.jpg"  style="width:555px;height:350px"></td>
@@ -258,6 +258,11 @@
 
       <h2>Final Results</h2>
       The following images and video show my final results.
+
+      <iframe width="1110" height="700"
+            src="http://www.youtube.com/embed/R8SG-SqWteg">
+      </iframe>
+
       <table border="1">
         <tr>
             <td><img src="task2/lines/8vectorscreen.jpg"  style="width:1110px;height:700px"></td>
@@ -276,6 +281,88 @@
         Stream Tubes
       </div>
 
+        Wit the seeding of the tubes i wanted to show the main air streams of the vortex but using less tubes of seeds that with the tasks using streamlines
+
+        <table border="1">
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+                <th>Z</th>
+            </tr>
+
+            <tr>
+                <td>110</td>
+                <td>-50</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>110</td>
+                <td>50</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>10</td>
+            </tr>
+        </table>
+
+                ren.AddActor(self.create_stream_line(110,-50,0,10))
+        ren.AddActor(self.create_stream_line(110,50,0,20))
+        ren.AddActor(self.create_stream_line(0,0,10,10,5))
+
+
+      The following images show each of the seeding points alone, this was we ca clearly visualize what each of the seeding points create
+      <table border="1">
+        <tr>
+            <td COLSPAN="2">(X,Y,Z)->(110,-50,0) With this seeding I wanted to show the left vortex of the wing</td>
+        </tr>
+        <tr>
+            <td><img src="task2/tubes/0vectorscreen.jpg"  style="width:555px;height:350px"></td>
+            <td><img src="task2/tubes/1vectorscreen.jpg"  style="width:555px;height:350px"></td>
+        </tr>
+
+        <tr>
+            <td COLSPAN="2">(X,Y,Z)->(110,50,0) With this seeding I wanted to show the right vortex of the wing</td>
+        </tr>
+        <tr>
+            <td><img src="task2/tubes/2vectorscreen.jpg"  style="width:555px;height:350px"></td>
+            <td><img src="task2/tubes/3vectorscreen.jpg"  style="width:555px;height:350px"></td>
+        </tr>
+
+        <tr>
+            <td COLSPAN="2">(X,Y,Z)->(0,10,20) With this seeding I wanted to show that the air in the center will remain most of the time "steady"</td>
+        </tr>
+        <tr>
+            <td><img src="task2/tubes/4vectorscreen.jpg"  style="width:555px;height:350px"></td>
+            <td><img src="task2/tubes/5vectorscreen.jpg"  style="width:555px;height:350px"></td>
+        </tr>
+
+        <tr>
+            <td COLSPAN="2">(X,Y,Z)->(0,-20,0) With this seeding I wanted to show that the air in the center will remain most of the time "steady"</td>
+        </tr>
+      </table>
+
+      <h2>Final Results</h2>
+      The following images and video show my final results.
+
+      <iframe width="1110" height="700"
+            src="http://www.youtube.com/embed/IXxA1jC-bbk">
+      </iframe>
+
+      <table border="1">
+        <tr>
+            <td><img src="task2/tubes/6vectorscreen.jpg"  style="width:1110px;height:700px"></td>
+        </tr>
+        <tr>
+            <td><img src="task2/tubes/7vectorscreen.jpg"  style="width:1110px;height:700px"></td>
+        </tr>
+        <tr>
+            <td><img src="task2/tubes/8vectorscreen.jpg"  style="width:1110px;height:700px"></td>
+        </tr>
+      </table>
+
+
       <div class="alert alert-warning" role="alert">
         Stream Surfaces
       </div>
@@ -291,7 +378,89 @@
         <h3 class="panel-title">Task 3: Combining Scalar and Vector Visualization</h3>
     </div>
     <div class="panel-body">
-                  Panel content
+        For this task I changed the color scale a little bit, I wanted to show the isosurfaces with only one color and the streamlines with a transfer function.
+
+        <p>In the following images I will show what I wanted to show with this task</p>
+
+
+        <table border="1">
+            <tr>
+                <td>In this image we can see the LEFT vortex. The image clearly depicts how each of the particles travel inside the "cone" created by the isosurfaces</td>
+            </tr>
+
+            <tr>
+                <td><img src="task3/0vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+                <td><img src="task3/1vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/2vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+            </tr>
+        </table>
+
+        <table border="1">
+            <tr>
+                <td colspan="2">In this image we can see the right vortex. The image clearly depicts how each of the particles travel inside the "cone" created by the isosurfaces</td>
+            </tr>
+
+            <tr>
+                <td><img src="task3/3vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+                <td><img src="task3/4vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/5vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+                <td><img src="task3/6vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+            </tr>
+        </table>
+
+        <table border="1">
+            <tr>
+                <td colspan="2">In these images I want to show the behavior of the wind in the center of the wing, we can clearly see that that the wind does not touch any other isosurface and for most of the time travels steady</td>
+            </tr>
+
+            <tr>
+                <td><img src="task3/7vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+                <td><img src="task3/8vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/9vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+                <td><img src="task3/10vrprintscreen.jpg"  style="width:555px;height:350px"></td>
+            </tr>
+        </table>
+
+
+
+        <h2>Final Results</h2>
+        The following images and video show my final results.
+
+    <iframe width="1110" height="700"
+            src="http://www.youtube.com/embed/IdQsxvSMutg">
+    </iframe>
+
+
+        <table border="1">
+            <tr>
+                <td><img src="task3/11vrprintscreen.jpg"  style="width:1110px;height:700px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/12vrprintscreen.jpg"  style="width:1110px;height:700px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/13vrprintscreen.jpg"  style="width:1110px;height:700px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/14vrprintscreen.jpg"  style="width:1110px;height:700px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/15vrprintscreen.jpg"  style="width:1110px;height:700px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/16vrprintscreen.jpg"  style="width:1110px;height:700px"></td>
+            </tr>
+            <tr>
+                <td><img src="task3/17vrprintscreen.jpg"  style="width:1110px;height:700px"></td>
+            </tr>
+        </table>
+
     </div>
 
 </div>
@@ -303,7 +472,8 @@
         <h3 class="panel-title">Task 4: Analysis</h3>
     </div>
     <div class="panel-body">
-                  Panel content
+
+
     </div>
 
 </div>

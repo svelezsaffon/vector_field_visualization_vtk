@@ -11,7 +11,7 @@ class ImageModification(object):
     def __init__(self,delta,wing):
 
 
-        self.print_counter=0
+        self.print_counter=6
         ren = vtk.vtkRenderer()
 
         self.geo_reader = vtk.vtkUnstructuredGridReader()
@@ -79,9 +79,9 @@ class ImageModification(object):
 
         self.arrowColor.AddRGBPoint(0, 1.0, 0.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(110, 0.0, 1.0, 0.0)
+        self.arrowColor.AddRGBPoint(90, 0.0, 1.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(220, 0.0, 0.0, 1.0)
+        self.arrowColor.AddRGBPoint(120, 0.0, 0.0, 1.0)
 
 
     def create_stream_line(self,y1,y2,y3,n,r=10,tr=2):
@@ -134,7 +134,7 @@ class ImageModification(object):
         self.w2i.SetInput(self.renWin)
         self.writer = vtk.vtkJPEGWriter()
         self.writer.SetInputConnection(self.w2i.GetOutputPort())
-        self.writer.SetFileName(`self.print_counter` + "vrprintscreen.jpg");
+        self.writer.SetFileName(`self.print_counter` + "vectorscreen.jpg");
         self.print_counter =1 + self.print_counter
         self.writer.Write()
 
