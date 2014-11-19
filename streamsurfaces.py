@@ -10,6 +10,9 @@ class ImageModification(object):
 
     def __init__(self,delta,wing):
 
+        self.arrowColor = vtk.vtkColorTransferFunction()
+
+        self.update_look_up_table()
 
         self.print_counter=0
         self.ren = vtk.vtkRenderer()
@@ -21,23 +24,19 @@ class ImageModification(object):
         self.vec_reader = vtk.vtkStructuredPointsReader()
         self.vec_reader.SetFileName(delta)
 
-
+        """ This is for drawing the wing,"""
         geo_Mapper=vtk.vtkDataSetMapper()
         geo_Mapper.SetInputConnection(self.geo_reader.GetOutputPort())
 
-        #glyph actor
         geo_actor = vtk.vtkActor()
         geo_actor.SetMapper(geo_Mapper)
 
         self.ren.AddActor(geo_actor)
 
-        self.arrowColor = vtk.vtkColorTransferFunction()
+        """End of adding the wing """
 
-        self.update_look_up_table()
 
-        #self.ren.AddActor(self.create_stream_line(0,150,0,0.2))
         self.ren.AddActor(self.create_stream_line(25,150,0,0.5))
-
 
 
         #Add renderer to renderwindow and render
@@ -49,8 +48,6 @@ class ImageModification(object):
         iren.SetRenderWindow(self.renWin)
 
         iren.AddObserver('RightButtonPressEvent', self.capture_image, 1.0)
-
-
 
         # Scalar Bar actor
         scalar_bar = vtk.vtkScalarBarActor()
@@ -75,45 +72,50 @@ class ImageModification(object):
 
         self.arrowColor.AddRGBPoint(0, 1.0, 0.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(110, 0.0, 1.0, 0.0)
+        self.arrowColor.AddRGBPoint(60, 0.0, 1.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(220, 0.0, 0.0, 1.0)
+        self.arrowColor.AddRGBPoint(120, 0.0, 0.0, 1.0)
+
+
 
 
     def create_stream_line(self,x,y,z,opa):
-
 
         rake = vtk.vtkLineSource()
         rake.SetPoint1(x, -y, z)
         rake.SetPoint2(x, y, z)
         rake.SetResolution(150)
 
-
-
+        """
+        rake_mapper = vtk.vtkPolyDataMapper()
+        rake_mapper.SetInputConnection(rake.GetOutputPort())
+        rake_actor = vtk.vtkActor()
+        rake_actor.SetMapper(rake_mapper)
+        self.ren.AddActor(rake_actor)
+        """
 
         integ = vtk.vtkRungeKutta4()
         streamline = vtk.vtkStreamLine()
         streamline.SetInputConnection(self.vec_reader.GetOutputPort())
         streamline.SetSourceConnection(rake.GetOutputPort())
         streamline.SetIntegrator(integ)
-        streamline.SetMaximumPropagationTime(220)
-        streamline.SetIntegrationStepLength(0.1)
-        streamline.SetIntegrationDirectionToIntegrateBothDirections()
+        streamline.SetMaximumPropagationTime(300)
+        streamline.SetIntegrationStepLength(0.01)
+        streamline.SetIntegrationDirectionToForward()
+        streamline.SpeedScalarsOn()
         streamline.SetStepLength(0.05)
-
-
 
         scalarSurface = vtk.vtkRuledSurfaceFilter()
         scalarSurface.SetInputConnection(streamline.GetOutputPort())
         #scalarSurface.SetOffset(0)
-        #scalarSurface.SetOnRatio(2)
-
-        #scalarSurface.PassLinesOn()
+        scalarSurface.SetOnRatio(1)
+        scalarSurface.PassLinesOn()
         scalarSurface.SetRuledModeToPointWalk()
         scalarSurface.SetDistanceFactor(30)
+
         mapper = vtk.vtkPolyDataMapper()
         mapper.SetInputConnection(scalarSurface.GetOutputPort())
-        mapper.SetScalarRange(self.vec_reader.GetOutput().GetScalarRange())
+        #mapper.SetScalarRange(self.vec_reader.GetOutput().GetScalarRange())
         mapper.SetLookupTable(self.arrowColor)
 
         actor = vtk.vtkActor()

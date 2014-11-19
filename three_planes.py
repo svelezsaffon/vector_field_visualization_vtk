@@ -36,13 +36,13 @@ class ImageModification(object):
         self.update_look_up_table()
 
 
-
+        self.plane1=None
         for i in range(0,3):
-            x=25
+            x=32.30   ##46.14
             if i==1:
-                x=110
+                x=113.86
             if i==2:
-                x=225
+                x=216.94  ##213.86
 
             plane_mapper=self.create_cut_acto_plane(x)
             ren.AddActor(self.create_glyph(plane_mapper))
@@ -51,15 +51,23 @@ class ImageModification(object):
 
 
         #Add renderer to renderwindow and render
-        renWin = vtk.vtkRenderWindow()
-        renWin.AddRenderer(ren)
-        renWin.SetSize(1920, 1080)
+        self.renWin = vtk.vtkRenderWindow()
+        self.renWin.AddRenderer(ren)
+        self.renWin.SetSize(1920, 1080)
 
         iren = vtk.vtkRenderWindowInteractor()
-        iren.SetRenderWindow(renWin)
+        iren.SetRenderWindow(self.renWin)
 
         iren.AddObserver('RightButtonPressEvent', self.capture_image, 1.0)
 
+        """
+        #Slider 1
+        sliderRep1=vtk.vtkSliderWidget()
+        sliderRep1.SetInteractor(iren)
+        sliderRep1.SetRepresentation(self.create_color_slider("X-Position",0.02,0.15,0,220))
+        sliderRep1.SetEnabled(True)
+        sliderRep1.AddObserver("InteractionEvent", self.change_iso)
+        """
 
 
         # Scalar Bar actor
@@ -81,16 +89,38 @@ class ImageModification(object):
 
 
         ren.SetBackground(0,0,0)
-        renWin.Render()
+        self.renWin.Render()
         iren.Start()
+
+    def change_iso(self,obj,event):
+
+      self.plane1.SetOrigin(obj.GetSliderRepresentation().GetValue(),0,0)
+
+
+    def create_color_slider(self,name,left,right,down,up,default_value=0.02):
+
+        slider=vtk.vtkSliderRepresentation2D()
+        slider.SetMinimumValue(down)
+        slider.SetMaximumValue(up)
+        slider.SetValue(default_value)
+        slider.SetTitleText(name)
+        slider.SetLabelFormat("%5.2f")
+
+        slider.GetPoint1Coordinate().SetCoordinateSystemToNormalizedDisplay()
+        slider.GetPoint1Coordinate().SetValue(left, 0.1)
+
+        slider.GetPoint2Coordinate().SetCoordinateSystemToNormalizedDisplay()
+        slider.GetPoint2Coordinate().SetValue(right, 0.1)
+
+        return slider
 
     def update_look_up_table(self):
 
         self.arrowColor.AddRGBPoint(0, 1.0, 0.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(110, 0.0, 1.0, 0.0)
+        self.arrowColor.AddRGBPoint(60, 0.0, 1.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(220, 0.0, 0.0, 1.0)
+        self.arrowColor.AddRGBPoint(120, 0.0, 0.0, 1.0)
 
     def create_glyph(self,plane_mapper):
         #in here we do the arrows
@@ -140,6 +170,8 @@ class ImageModification(object):
         probe_filter.SetInputConnection(cutter.GetOutputPort())
         probe_filter.SetSourceConnection(self.vec_reader.GetOutputPort())
 
+        if xpos>170 and xpos <220:
+            self.plane1=plane
 
         return probe_filter
 
@@ -149,7 +181,7 @@ class ImageModification(object):
         self.w2i.SetInput(self.renWin)
         self.writer = vtk.vtkJPEGWriter()
         self.writer.SetInputConnection(self.w2i.GetOutputPort())
-        self.writer.SetFileName(`self.print_counter` + "vrprintscreen.jpg");
+        self.writer.SetFileName(`self.print_counter` + "vectorscreen.jpg");
         self.print_counter =1 + self.print_counter
         self.writer.Write()
 
