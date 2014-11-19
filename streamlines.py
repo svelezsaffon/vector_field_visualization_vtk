@@ -11,7 +11,7 @@ class ImageModification(object):
     def __init__(self,delta,wing):
 
 
-        self.print_counter=0
+        self.print_counter=8
         ren = vtk.vtkRenderer()
 
         self.geo_reader = vtk.vtkUnstructuredGridReader()
@@ -38,8 +38,8 @@ class ImageModification(object):
         ren.AddActor(self.create_stream_line(110,-50,0,50))
         ren.AddActor(self.create_stream_line(110,50,0,50))
 
-        ren.AddActor(self.create_stream_line(0,50,0,20,10))
-        ren.AddActor(self.create_stream_line(0,-50,0,20,10))
+        ren.AddActor(self.create_stream_line(0,20,0,20,10))
+        ren.AddActor(self.create_stream_line(0,-20,0,20,10))
 
 
         #Add renderer to renderwindow and render
@@ -124,7 +124,7 @@ class ImageModification(object):
         self.w2i.SetInput(self.renWin)
         self.writer = vtk.vtkJPEGWriter()
         self.writer.SetInputConnection(self.w2i.GetOutputPort())
-        self.writer.SetFileName(`self.print_counter` + "vrprintscreen.jpg");
+        self.writer.SetFileName(`self.print_counter` + "vectorscreen.jpg");
         self.print_counter =1 + self.print_counter
         self.writer.Write()
 
