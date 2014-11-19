@@ -77,9 +77,9 @@ class ImageModification(object):
 
         self.arrowColor.AddRGBPoint(0, 1.0, 0.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(110, 0.0, 1.0, 0.0)
+        self.arrowColor.AddRGBPoint(60, 0.0, 1.0, 0.0)
 
-        self.arrowColor.AddRGBPoint(220, 0.0, 0.0, 1.0)
+        self.arrowColor.AddRGBPoint(120, 0.0, 0.0, 1.0)
 
     def create_stream_line(self,y1,y2,y3,n,r=10):
 
