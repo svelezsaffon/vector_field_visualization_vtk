@@ -11,7 +11,7 @@ class ImageModification(object):
     def __init__(self,delta,wing):
 
 
-        self.print_counter=0
+        self.print_counter=6
         ren = vtk.vtkRenderer()
 
         self.geo_reader = vtk.vtkUnstructuredGridReader()
@@ -38,7 +38,8 @@ class ImageModification(object):
 
         self.plane1=None
         for i in range(0,3):
-            x=32.30   ##46.14
+            if i==0:
+                x=32.30   ##46.14
             if i==1:
                 x=113.86
             if i==2:

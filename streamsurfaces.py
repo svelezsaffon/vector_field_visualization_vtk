@@ -77,8 +77,6 @@ class ImageModification(object):
         self.arrowColor.AddRGBPoint(120, 0.0, 0.0, 1.0)
 
 
-
-
     def create_stream_line(self,x,y,z,opa):
 
         rake = vtk.vtkLineSource()
